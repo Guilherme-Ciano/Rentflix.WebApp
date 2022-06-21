@@ -24,6 +24,35 @@ h6 {
   padding: 0;
 }
 
+.loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 1;
+}
+
+.endLoading {
+  transition: 500ms;
+  animation: fadding 0.5s ease-in-out;
+}
+
+@keyframes fadding {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
 @media only screen and (max-width: 768px) {
   html,
   body,

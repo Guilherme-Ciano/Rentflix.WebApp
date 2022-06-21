@@ -1,24 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  value: 0,
+  isLoading: true,
 };
 
 export const mainState = createSlice({
-  name: "counter",
+  name: "mainState",
   initialState,
   reducers: {
-    increment: (state) => {
-      state.value += 1;
-    },
-    decrement: (state) => {
-      state.value -= 1;
-    },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload;
+    setIsLoading: (state, action) => {
+      state.isLoading = action.payload;
     },
   },
 });
 
-export const { increment, decrement, incrementByAmount } = mainState.actions;
+export const { setIsLoading } = mainState.actions;
 export default mainState.reducer;

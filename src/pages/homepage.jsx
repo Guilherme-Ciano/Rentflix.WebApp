@@ -1,5 +1,4 @@
-import React from "react";
-import image from "../assets/hand.svg";
+import React, { useEffect } from "react";
 import "../styles/frontpage.scss";
 import Navbar from "../components/navbar";
 import Features from "../components/feature";
@@ -10,8 +9,11 @@ export default function Homepage() {
     <>
       <Navbar>
         <section className="frontpage-section">
-          <div className="headerTitle">
+          <div className="headerTitle typewriter">
             <h1 className="title">Que tal assistir algo hoje?</h1>
+            <h3 className="description">
+              Pra qualquer hora, qualquer momento e qualquer gosto
+            </h3>
           </div>
         </section>
 
