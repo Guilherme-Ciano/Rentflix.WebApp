@@ -1,12 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-const initialState = {
-  isLoading: true,
-};
+import { mainInitialState } from "../../utils/const";
 
 export const mainState = createSlice({
   name: "mainState",
-  initialState,
+  initialState: mainInitialState,
   reducers: {
     setIsLoading: (state, action) => {
       state.isLoading = action.payload;

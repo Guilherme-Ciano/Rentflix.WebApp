@@ -17,9 +17,18 @@ import {
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import Navbar from "../components/navbar";
+import { useSelector } from "react-redux";
+import GlobalHandlers from "../services/handlers";
+import API_Controller from "../services/api";
 
 export default function Signup() {
+  const userState = useSelector((state) => state.userState.data);
+  const userStateMessages = useSelector((state) => state.userState.messages);
   const [showPassword, setShowPassword] = useState(false);
+
+  const { handleMaskCPF, handleUpdateUser, handleValidations, handleMaskDate } =
+    GlobalHandlers();
+  const { executeSignUp } = API_Controller();
 
   return (
     <Navbar>
@@ -53,24 +62,78 @@ export default function Signup() {
                 <Box>
                   <FormControl id="firstName" isRequired>
                     <FormLabel>Nome</FormLabel>
-                    <Input type="text" />
+                    <Input
+                      type="text"
+                      name="nome"
+                      onChange={handleUpdateUser}
+                      value={userState.nome}
+                      isInvalid={userStateMessages.nome}
+                      placeholder={userStateMessages.nome}
+                    />
                   </FormControl>
                 </Box>
                 <Box>
                   <FormControl id="lastName">
                     <FormLabel>Sobrenome</FormLabel>
-                    <Input type="text" />
+                    <Input
+                      type="text"
+                      name="sobrenome"
+                      onChange={handleUpdateUser}
+                      value={userState.sobrenome}
+                      isInvalid={userStateMessages.sobrenome}
+                      placeholder={userStateMessages.sobrenome}
+                    />
                   </FormControl>
                 </Box>
               </HStack>
+              <FormControl id="CPF" isRequired>
+                <FormLabel>CPF</FormLabel>
+                <Input
+                  type="text"
+                  name="cpf"
+                  maxLength={11}
+                  onChange={handleUpdateUser}
+                  onBlur={handleMaskCPF}
+                  value={userState.cpf}
+                  isInvalid={userStateMessages.cpf}
+                  placeholder={userStateMessages.cpf}
+                />
+              </FormControl>
+              <FormControl id="dataNascimento" isRequired>
+                <FormLabel>Data de nascimento</FormLabel>
+                <Input
+                  type="text"
+                  name="dataNascimento"
+                  maxLength={11}
+                  onChange={handleUpdateUser}
+                  onBlur={handleMaskDate}
+                  value={userState.dataNascimento}
+                  isInvalid={userStateMessages.dataNascimento}
+                  placeholder={userStateMessages.dataNascimento}
+                />
+              </FormControl>
               <FormControl id="email" isRequired>
                 <FormLabel>Email</FormLabel>
-                <Input type="email" />
+                <Input
+                  type="email"
+                  name="email"
+                  value={userState.email}
+                  onChange={handleUpdateUser}
+                  isInvalid={userStateMessages.email}
+                  placeholder={userStateMessages.email}
+                />
               </FormControl>
               <FormControl id="password" isRequired>
                 <FormLabel>Senha</FormLabel>
                 <InputGroup>
-                  <Input type={showPassword ? "text" : "password"} />
+                  <Input
+                    name="senha"
+                    type={showPassword ? "text" : "password"}
+                    onChange={handleUpdateUser}
+                    value={userState.senha}
+                    isInvalid={userStateMessages.senha}
+                    placeholder={userStateMessages.senha}
+                  />
                   <InputRightElement h={"full"}>
                     <Button
                       variant={"ghost"}
@@ -91,6 +154,10 @@ export default function Signup() {
                   color={"white"}
                   _hover={{
                     bg: "#F4AC40",
+                  }}
+                  onClick={() => {
+                    console.log("clicked", handleValidations());
+                    // handleValidations() ? executeSignUp(userState) : () => {};
                   }}
                 >
                   Cadastrar-se

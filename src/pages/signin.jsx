@@ -13,10 +13,17 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
-import Blob from "../assets/blob.svg";
 import Navbar from "../components/navbar";
+import { useSelector } from "react-redux/es/exports";
+import GlobalHandlers from "../services/handlers";
+import API_Controller from "../services/api";
 
 export default function Signin() {
+  const userState = useSelector((state) => state.userState.data);
+
+  const { handleUpdateUser } = GlobalHandlers();
+  const { executeSignIn } = API_Controller();
+
   return (
     <Navbar>
       <Flex
@@ -47,11 +54,11 @@ export default function Signin() {
             <Stack spacing={4}>
               <FormControl id="email">
                 <FormLabel>Email</FormLabel>
-                <Input type="email" />
+                <Input type="email" name="email" onBlur={handleUpdateUser} />
               </FormControl>
               <FormControl id="password">
                 <FormLabel>Senha</FormLabel>
-                <Input type="password" />
+                <Input type="password" name="senha" onBlur={handleUpdateUser} />
               </FormControl>
               <Stack spacing={10}>
                 <Stack
@@ -73,6 +80,7 @@ export default function Signin() {
                   _hover={{
                     bg: "#F4AC40",
                   }}
+                  onClick={executeSignIn(userState)}
                 >
                   Entrar
                 </Button>
