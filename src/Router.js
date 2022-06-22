@@ -15,7 +15,7 @@ export default function ApplicationRouter() {
   useEffect(() => {
     setTimeout(() => {
       dispatch(setIsLoading(false));
-    }, 2000);
+    }, 1500);
   }, []);
 
   return (

@@ -16,58 +16,6 @@
   background-color: rgba(0, 0, 0, 0.7);
 }
 
-.catalogue-section {
-  width: 100%;
-  height: 100vh;
-  background: black;
-
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-
-  align-items: center;
-  justify-items: center;
-}
-
-.benefits-section {
-  width: 100%;
-  min-height: 100vh;
-  background: black;
-
-  display: flex;
-  flex-direction: column;
-
-  align-items: center;
-  justify-items: center;
-
-  padding-top: 10rem;
-}
-
-.container {
-  width: 87%;
-  height: 100%;
-
-  display: flex;
-  flex-direction: column;
-
-  align-items: center;
-  justify-items: center;
-}
-
-.textArea {
-  width: 80%;
-  padding: 5rem;
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
-
-  align-items: left;
-  justify-content: center;
-
-  gap: 1rem;
-
-  height: 100%;
-}
-
 .headerTitle {
   width: 100%;
   padding: 5rem;
@@ -96,6 +44,8 @@
   font-size: 3rem;
   font-weight: bold;
   color: white;
+
+  opacity: 0;
 
   animation: faddingIn 1.5s ease 4s 1 normal forwards;
   animation-delay: 2s;
@@ -126,9 +76,7 @@
 }
 
 @media only screen and (max-width: 768px) {
-  .frontpage-section,
-  .catalogue-section,
-  .benefits-section {
+  .frontpage-section{
     max-width: 100%;
     min-height: 100vh;
 
@@ -158,9 +106,5 @@
     width: 100%;
     display: flex;
     gap: 10px;
-  }
-
-  img.image {
-    height: 100%;
   }
 }

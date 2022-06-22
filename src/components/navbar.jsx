@@ -30,6 +30,8 @@ export default function Navbar({ children }) {
               color={useColorModeValue("#F4AC45", "white")}
               fontWeight={"bold"}
               fontSize={"lg"}
+              onClick={() => (window.location.href = "/")}
+              cursor={"pointer"}
             >
               Rentflix
             </Text>
@@ -44,6 +46,10 @@ export default function Navbar({ children }) {
                 width={{
                   base: "50%",
                 }}
+                _hover={{
+                  bg: "#F4AC45",
+                  color: "black",
+                }}
                 onClick={() => (window.location.href = "/sign-up")}
               >
                 Cadastre-se
@@ -54,6 +60,10 @@ export default function Navbar({ children }) {
                 variant="solid"
                 width={{
                   base: "50%",
+                }}
+                _hover={{
+                  bg: "#F4AC45",
+                  color: "black",
                 }}
                 onClick={() => (window.location.href = "/sign-in")}
               >
