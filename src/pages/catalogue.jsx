@@ -11,15 +11,21 @@ import {
   useColorModeValue,
   Link,
   Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
   DrawerContent,
+  DrawerCloseButton,
   Text,
   useDisclosure,
-  BoxProps,
+  Badge,
   FlexProps,
   Menu,
   MenuButton,
   MenuDivider,
   MenuItem,
+  Button,
   MenuList,
 } from "@chakra-ui/react";
 import {
@@ -31,9 +37,8 @@ import {
   FiMenu,
   FiBell,
   FiChevronDown,
+  FiShoppingBag,
 } from "react-icons/fi";
-import { IconType } from "react-icons";
-import { ReactText } from "react";
 import MovieGrid from "./movieGrid";
 
 const LinkItems = [
@@ -78,7 +83,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
   return (
     <Box
       transition="3s ease"
-      bg={useColorModeValue("#002233", "gray.900")}
+      bg={useColorModeValue("#000000", "gray.900")}
       borderRight="1px"
       borderRightColor={useColorModeValue("gray.200", "gray.700")}
       w={{ base: "full", md: 60 }}
@@ -88,7 +93,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
+        <Text fontSize="2xl" color={"#F4AC45"} fontWeight="bold">
           Rentflix
         </Text>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
@@ -117,7 +122,7 @@ const NavItem = ({ icon, children, ...rest }) => {
         role="group"
         cursor="pointer"
         _hover={{
-          bg: "cyan.400",
+          bg: "#F4AC45",
           color: "white",
         }}
         {...rest}
@@ -139,13 +144,14 @@ const NavItem = ({ icon, children, ...rest }) => {
 };
 
 const MobileNav = ({ onOpen, ...rest }) => {
+  const [drawerIsOpen, setDrawerIsOpen] = React.useState(false);
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
       px={{ base: 4, md: 4 }}
       height="20"
       alignItems="center"
-      bg={useColorModeValue("#002233", "gray.900")}
+      bg={useColorModeValue("#000000", "gray.900")}
       borderBottomWidth="1px"
       borderBottomColor={useColorModeValue("gray.200", "gray.700")}
       justifyContent={{ base: "space-between", md: "flex-end" }}
@@ -163,19 +169,49 @@ const MobileNav = ({ onOpen, ...rest }) => {
       <Text
         display={{ base: "flex", md: "none" }}
         fontSize="2xl"
-        fontFamily="monospace"
         fontWeight="bold"
+        color={"#F4AC45"}
       >
         Rentflix
       </Text>
 
       <HStack spacing={{ base: "0", md: "6" }}>
-        <IconButton
-          size="lg"
-          variant="ghost"
-          aria-label="open menu"
-          icon={<FiBell />}
+        <div
+          style={{
+            position: "relative",
+          }}
+        >
+          <IconButton
+            size="lg"
+            variant="ghost"
+            aria-label="open menu"
+            icon={<FiShoppingBag />}
+            color={"#F4AC45"}
+            _hover={{
+              bg: "#F4AC45",
+              color: "white",
+            }}
+            onClick={() => setDrawerIsOpen(!drawerIsOpen)}
+          />
+
+          <Badge
+            variant="subtle"
+            colorScheme="red"
+            position={"absolute"}
+            top={"-5px"}
+            zIndex={"90"}
+            right={"-5px"}
+            borderRadius={"full"}
+          >
+            5
+          </Badge>
+        </div>
+
+        <MovieDrawer
+          isOpenDrawer={drawerIsOpen}
+          setDrawerIsOpen={setDrawerIsOpen}
         />
+
         <Flex alignItems={"center"}>
           <Menu>
             <MenuButton
@@ -197,7 +233,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
                   ml="2"
                 >
                   <Text fontSize="sm">Guilherme Ciano</Text>
-                  <Text fontSize="xs" color="gray.600">
+                  <Text fontSize="xs" color="whitw">
                     Usuário
                   </Text>
                 </VStack>
@@ -223,3 +259,34 @@ const MobileNav = ({ onOpen, ...rest }) => {
     </Flex>
   );
 };
+
+function MovieDrawer(props) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpenDrawer, setDrawerIsOpen, children } = props;
+  return (
+    <Drawer
+      isOpen={isOpenDrawer}
+      placement="right"
+      onClose={() => setDrawerIsOpen(false)}
+    >
+      <DrawerOverlay />
+      <DrawerContent>
+        <DrawerCloseButton />
+        <DrawerHeader>Finalizar carrinho</DrawerHeader>
+
+        <DrawerBody>{children}</DrawerBody>
+
+        <DrawerFooter>
+          <Button
+            variant="outline"
+            mr={3}
+            onClick={() => setDrawerIsOpen(false)}
+          >
+            Cancelar
+          </Button>
+          <Button colorScheme="#F4AC45">Alugar</Button>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
+  );
+}
