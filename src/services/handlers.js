@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux/es/exports";
+import { updateCartItems } from "../store/slices/cartState";
 import {
   clearUserMessages,
   updateUserStore,
@@ -41,7 +42,6 @@ export default function GlobalHandlers() {
   };
 
   const handleSubmitValidation = () => {
-    // if all fields are filled out, clear messages and submit
     if (Object.keys(userState).every((key) => userState[key] !== "")) {
       return true;
     }
@@ -55,11 +55,16 @@ export default function GlobalHandlers() {
     handleUpdateUser({ target: { name: "dataNascimento", value: maskedDate } });
   };
 
+  const addMovieToCart = (movie) => {
+    dispatch(updateCartItems(movie));
+  };
+
   return {
     handleUpdateUser,
     handleMaskCPF,
     handleValidations,
     handleMaskDate,
     handleSubmitValidation,
+    addMovieToCart,
   };
 }

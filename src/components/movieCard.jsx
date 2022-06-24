@@ -1,27 +1,29 @@
 import React from "react";
 import "../styles/movieGrid.scss";
 import { Button } from "@chakra-ui/react";
+import { useDispatch } from "react-redux";
+import { updateCartItems } from "../store/slices/cartState";
+import { useSelector } from "react-redux";
 
 export default function MovieCard(props) {
-  const {
-    movieTitle,
-    movieGenre,
-    movieDescription,
-    moviePoster,
-    rentLink,
-    isLancamento,
-  } = props;
+  const dispatch = useDispatch();
+  const { movie } = props;
+  const allMovies = useSelector((state) => state.cartState.data);
+
+  const sendMovieToCart = () => {
+    dispatch(updateCartItems([...allMovies.items, movie]));
+  };
 
   return (
     <div className="movieCard">
-      <img src={moviePoster} className="moviePoster" />
+      <img src={movie.moviePoster} className="moviePoster" />
       <div className="movieInfo">
-        {isLancamento && <div className="movieBadget"></div>}
+        {movie.isLancamento && <div className="movieBadget"></div>}
         <div className="movieHeader">
-          <div className="movieTitle">{movieTitle}</div>
-          <div className="movieGenre">{movieGenre}</div>
+          <div className="movieTitle">{movie.movieTitle}</div>
+          <div className="movieGenre">{movie.movieGenre}</div>
         </div>
-        <div className="movieDescription">{movieDescription}</div>
+        <div className="movieDescription">{movie.movieDescription}</div>
 
         <Button
           fontFamily={"heading"}
@@ -33,7 +35,7 @@ export default function MovieCard(props) {
             bgGradient: "linear(to-r, blue.400,pink.400)",
             boxShadow: "xl",
           }}
-          onClick={() => (window.location.href = rentLink)}
+          onClick={sendMovieToCart}
         >
           Alugar
         </Button>

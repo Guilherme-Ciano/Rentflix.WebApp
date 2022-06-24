@@ -13,3 +13,18 @@ export const userInitialState = {
   },
   messages: {},
 };
+
+export const cartInitialState = {
+  data: {
+    items: [],
+    total: 0,
+  },
+  messages: {},
+};
+
+export const moviesInitialState = {
+  data: {
+    items: [],
+  },
+  messages: {},
+};

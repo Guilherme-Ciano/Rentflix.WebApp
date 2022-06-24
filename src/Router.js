@@ -8,6 +8,7 @@ import Catalogue from "./pages/catalogue";
 import Loader from "./components/loader";
 import { setIsLoading } from "./store/slices/mainState";
 import { useDispatch } from "react-redux/es/exports";
+import MoviePage from "./pages/moviePage";
 
 export default function ApplicationRouter() {
   const dispatch = useDispatch();
@@ -28,6 +29,9 @@ export default function ApplicationRouter() {
             <Route path="/sign-in" element={<Signin />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/catalogue" element={<Catalogue />} />
+            <Route path="/catalogue/high-rented" element={<Catalogue />} />
+            <Route path="/catalogue/brand-new" element={<Catalogue />} />
+            <Route path="/movies/new" element={<MoviePage />} />
           </Routes>
         </Router>
       </Loader>

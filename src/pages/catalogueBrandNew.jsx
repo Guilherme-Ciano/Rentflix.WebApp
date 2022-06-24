@@ -42,7 +42,6 @@ import {
 import MovieGrid from "./movieGrid";
 import { useSelector } from "react-redux";
 import CartCard from "../components/cartCard";
-import GlobalHandlers from "../services/handlers";
 
 const LinkItems = [
   { name: "Home", icon: FiHome, link: "/catalogue" },
@@ -78,7 +77,7 @@ export default function Catalogue({ children }) {
       {/* mobilenav */}
       <MobileNav onOpen={onOpen} />
       <Box ml={{ base: 0, md: 60 }} p="4">
-        <MovieGrid movie={allFilmes.items} />
+        <MovieGrid movie={allFilmes.items} isBrandNew={true} />
       </Box>
     </Box>
   );
@@ -276,7 +275,6 @@ function MovieDrawer(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isOpenDrawer, setDrawerIsOpen, children } = props;
   const allFilmes = useSelector((state) => state.cartState.data);
-  const { executeRentCartMovie } = GlobalHandlers();
   return (
     <Drawer
       isOpen={isOpenDrawer}
@@ -306,12 +304,7 @@ function MovieDrawer(props) {
             <Button variant="outline" borderColor="red.400" color={"red.400"}>
               Cancelar
             </Button>
-            <Button
-              variant="outline"
-              borderColor="#F4AC45"
-              color={"#F4AC45"}
-              onClick={executeRentCartMovie}
-            >
+            <Button variant="outline" borderColor="#F4AC45" color={"#F4AC45"}>
               Alugar
             </Button>
           </div>

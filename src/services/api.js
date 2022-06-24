@@ -51,8 +51,37 @@ export default function API_Controller() {
     });
   };
 
+  const executeRentCartMovie = (data) => {
+    let arrayOfMovieIds = [];
+
+    data.movies.forEach((movie) => {
+      arrayOfMovieIds.push(movie.id);
+    });
+
+    const promise = new Promise((resolve, reject) => {
+      axios
+        .post(`${BACKEND_URL}/cliente/alugar`, {
+          idFilmes: arrayOfMovieIds,
+          idCliente: data.user.id,
+        })
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+
+    toast.promise(promise, {
+      pending: "Validando informações...",
+      success: "Filme(s) alugado(s) com sucesso!",
+      error: "Erro ao alugar filme(s)!",
+    });
+  };
+
   return {
     executeSignUp,
     executeSignIn,
+    executeRentCartMovie,
   };
 }

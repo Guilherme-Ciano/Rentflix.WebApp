@@ -1,0 +1,64 @@
+[
+  {
+    "id": 1,
+    "movieTitle": "Coringa",
+    "movieGenre": "Drama",
+    "movieDescription": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestias, sint porro ullam dolor sit. Illum rem natus beatae vel quis, necessitatibus commodi adipisci maiores ipsum eaque sequi quos quaenon?",
+    "moviePoster": "https://www.joblo.com/wp-content/uploads/2019/08/joker-poster-main2-1.jpg",
+    "lancamento": "2019"
+  },
+
+  {
+    "id": 2,
+    "movieTitle": "Coringa",
+    "movieGenre": "Drama",
+    "movieDescription": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestias, sint porro ullam dolor sit. Illum rem natus beatae vel quis, necessitatibus commodi adipisci maiores ipsum eaque sequi quos quaenon?",
+    "moviePoster": "https://www.joblo.com/wp-content/uploads/2019/08/joker-poster-main2-1.jpg",
+    "lancamento": "2019"
+  },
+
+  {
+    "id": 3,
+    "movieTitle": "Coringa",
+    "movieGenre": "Drama",
+    "movieDescription": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestias, sint porro ullam dolor sit. Illum rem natus beatae vel quis, necessitatibus commodi adipisci maiores ipsum eaque sequi quos quaenon?",
+    "moviePoster": "https://www.joblo.com/wp-content/uploads/2019/08/joker-poster-main2-1.jpg",
+    "lancamento": "2019"
+  },
+
+  {
+    "id": 4,
+    "movieTitle": "Coringa",
+    "movieGenre": "Drama",
+    "movieDescription": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestias, sint porro ullam dolor sit. Illum rem natus beatae vel quis, necessitatibus commodi adipisci maiores ipsum eaque sequi quos quaenon?",
+    "moviePoster": "https://www.joblo.com/wp-content/uploads/2019/08/joker-poster-main2-1.jpg",
+    "lancamento": "2019"
+  },
+
+  {
+    "id": 5,
+    "movieTitle": "Coringa",
+    "movieGenre": "Drama",
+    "movieDescription": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestias, sint porro ullam dolor sit. Illum rem natus beatae vel quis, necessitatibus commodi adipisci maiores ipsum eaque sequi quos quaenon?",
+    "moviePoster": "https://www.joblo.com/wp-content/uploads/2019/08/joker-poster-main2-1.jpg",
+    "lancamento": "2019"
+  },
+
+  {
+    "id": 6,
+    "movieTitle": "Coringa",
+    "movieGenre": "Drama",
+    "movieDescription": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestias, sint porro ullam dolor sit. Illum rem natus beatae vel quis, necessitatibus commodi adipisci maiores ipsum eaque sequi quos quaenon?",
+    "moviePoster": "https://www.joblo.com/wp-content/uploads/2019/08/joker-poster-main2-1.jpg",
+    "lancamento": "2022"
+  },
+
+  {
+    "id": 7,
+    "movieTitle": "Coringa",
+    "movieGenre": "Drama",
+    "movieDescription": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestias, sint porro ullam dolor sit. Illum rem natus beatae vel quis, necessitatibus commodi adipisci maiores ipsum eaque sequi quos quaenon?",
+    "moviePoster": "https://www.joblo.com/wp-content/uploads/2019/08/joker-poster-main2-1.jpg",
+    "lancamento": "2020"
+  }
+]
