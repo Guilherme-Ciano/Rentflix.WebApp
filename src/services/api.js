@@ -6,9 +6,16 @@ export default function API_Controller() {
   const executeSignUp = (data) => {
     const promise = new Promise((resolve, reject) => {
       axios
-        .post(`${BACKEND_URL}/signup`, data)
+        .post(`${BACKEND_URL}/clientes`, {
+          ...data,
+          cpf: data.cpf.replace(/\D/g, ""),
+          dataNascimento: data.dataNascimento.split("/").reverse().join("-"),
+        })
         .then((response) => {
+          localStorage.setItem("token", response.token);
+          localStorage.setItem("user", response.data);
           resolve(response);
+          window.location.href = "/catalogue";
         })
         .catch((error) => {
           reject(error);
@@ -20,14 +27,15 @@ export default function API_Controller() {
       success: "Usuário cadastrado com sucesso!",
       error: "Erro ao cadastrar usuário!",
     });
-
-    return promise;
   };
 
   const executeSignIn = (data) => {
     const promise = new Promise((resolve, reject) => {
       axios
-        .post(`${BACKEND_URL}/signin`, data)
+        .post(`${BACKEND_URL}/cliente/login`, {
+          email: "",
+          senha: "",
+        })
         .then((response) => {
           resolve(response);
         })
@@ -41,8 +49,6 @@ export default function API_Controller() {
       success: "Usuário autenticado com sucesso!",
       error: "Erro ao autenticar usuário!",
     });
-
-    return promise;
   };
 
   return {

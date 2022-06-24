@@ -14,10 +14,10 @@ import {
   useColorModeValue,
   Link,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import Navbar from "../components/navbar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import GlobalHandlers from "../services/handlers";
 import API_Controller from "../services/api";
 
@@ -25,9 +25,15 @@ export default function Signup() {
   const userState = useSelector((state) => state.userState.data);
   const userStateMessages = useSelector((state) => state.userState.messages);
   const [showPassword, setShowPassword] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
 
-  const { handleMaskCPF, handleUpdateUser, handleValidations, handleMaskDate } =
-    GlobalHandlers();
+  const {
+    handleMaskCPF,
+    handleUpdateUser,
+    handleValidations,
+    handleMaskDate,
+    handleSubmitValidation,
+  } = GlobalHandlers();
   const { executeSignUp } = API_Controller();
 
   return (
@@ -73,7 +79,7 @@ export default function Signup() {
                   </FormControl>
                 </Box>
                 <Box>
-                  <FormControl id="lastName">
+                  <FormControl id="lastName" isRequired>
                     <FormLabel>Sobrenome</FormLabel>
                     <Input
                       type="text"
@@ -91,6 +97,7 @@ export default function Signup() {
                 <Input
                   type="text"
                   name="cpf"
+                  minLength={11}
                   maxLength={11}
                   onChange={handleUpdateUser}
                   onBlur={handleMaskCPF}
@@ -104,7 +111,8 @@ export default function Signup() {
                 <Input
                   type="text"
                   name="dataNascimento"
-                  maxLength={11}
+                  minLength={8}
+                  maxLength={8}
                   onChange={handleUpdateUser}
                   onBlur={handleMaskDate}
                   value={userState.dataNascimento}
@@ -156,8 +164,10 @@ export default function Signup() {
                     bg: "#F4AC40",
                   }}
                   onClick={() => {
-                    console.log("clicked", handleValidations());
-                    // handleValidations() ? executeSignUp(userState) : () => {};
+                    handleValidations();
+                    if (handleSubmitValidation()) {
+                      executeSignUp(userState);
+                    }
                   }}
                 >
                   Cadastrar-se

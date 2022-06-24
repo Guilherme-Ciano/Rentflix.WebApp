@@ -38,14 +38,13 @@ export default function GlobalHandlers() {
         );
       }
     });
+  };
 
+  const handleSubmitValidation = () => {
+    // if all fields are filled out, clear messages and submit
     if (Object.keys(userState).every((key) => userState[key] !== "")) {
-      dispatch(clearUserMessages());
-    }
-
-    if (Object.keys(userStateMessages).length === 0) {
       return true;
-    } else return false;
+    }
   };
 
   const handleMaskDate = (e) => {
@@ -61,5 +60,6 @@ export default function GlobalHandlers() {
     handleMaskCPF,
     handleValidations,
     handleMaskDate,
+    handleSubmitValidation,
   };
 }
