@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { updateMovieItems } from "../store/slices/moviesState";
 import { updateUserStore } from "../store/slices/userState";
+import { updateCartItems } from "../store/slices/cartState";
+import { updateLocacoesItems } from "../store/slices/locacoesState";
 
 export default function API_Controller() {
   const dispatch = useDispatch();
@@ -17,8 +19,9 @@ export default function API_Controller() {
           dataNascimento: data.dataNascimento.split("/").reverse().join("-"),
         })
         .then((response) => {
-          localStorage.setItem("token", response.token);
-          localStorage.setItem("user", response.data);
+          dispatch(updateUserStore(response.data));
+          localStorage.setItem("token", JSON.stringify(response.token));
+          localStorage.setItem("user", JSON.stringify(response.data));
           resolve(response);
           window.location.href = "/catalogue";
         })
@@ -60,8 +63,75 @@ export default function API_Controller() {
     });
   };
 
+  const executeGetUsers = () => {
+    const promise = new Promise((resolve, reject) => {
+      axios
+        .get(`${BACKEND_URL}/clientes`)
+        .then((response) => {
+          dispatch(
+            updateUserStore({
+              items: response.data,
+            })
+          );
+          resolve(response);
+        })
+        .catch((error) => {
+          console.log(error);
+          reject(error);
+        });
+    });
+
+    toast.promise(promise, {
+      pending: "Carregando usuários...",
+      success: "Usuários carregados com sucesso!",
+      error: "Erro ao carregar usuários!",
+    });
+  };
+
+  const executeDeleteUser = (id) => {
+    const promise = new Promise((resolve, reject) => {
+      axios
+        .delete(`${BACKEND_URL}/clientes/${id}`, {
+          Id: id,
+        })
+        .then((response) => {
+          resolve(response);
+        })
+        .catch((error) => {
+          console.log(error);
+          reject(error);
+        });
+    });
+
+    toast.promise(promise, {
+      pending: "Excluindo usuário...",
+      success: "Usuário excluído com sucesso!",
+      error: "Erro ao excluir usuário!",
+    });
+  };
+
+  const executeGetLocacoes = () => {
+    const promise = new Promise((resolve, reject) => {
+      axios
+        .get(`${BACKEND_URL}/locacoes`)
+        .then((response) => {
+          dispatch(updateLocacoesItems(response.data));
+          resolve(response);
+        })
+        .catch((error) => {
+          console.log(error);
+          reject(error);
+        });
+    });
+
+    toast.promise(promise, {
+      pending: "Carregando locações...",
+      success: "Locações carregadas com sucesso!",
+      error: "Erro ao carregar locações!",
+    });
+  };
+
   const executeCreateMovie = (data) => {
-    console.log(data);
     const promise = new Promise((resolve, reject) => {
       axios
         .post(`${BACKEND_URL}/filmes`, {
@@ -106,31 +176,46 @@ export default function API_Controller() {
   };
 
   const executeRentCartMovie = (data) => {
-    let arrayOfMovieIds = [];
+    const user = JSON.parse(localStorage.getItem("user"));
 
-    data.movies.forEach((movie) => {
-      arrayOfMovieIds.push(movie.id);
+    data.items.forEach((movie) => {
+      const promise = new Promise((resolve, reject) => {
+        axios
+          .post(`${BACKEND_URL}/locacoes`, {
+            Id_Cliente: user.id,
+            Id_Filme: movie.id,
+            DataLocacao: new Date().toISOString().split("T")[0],
+            DataDevolucao:
+              movie.lancamento === 1
+                ? new Date(new Date().setDate(new Date().getDate() + 2))
+                    .toISOString()
+                    .split("T")[0]
+                : new Date(new Date().setDate(new Date().getDate() + 3))
+                    .toISOString()
+                    .split("T")[0],
+          })
+          .then((response) => {
+            resolve(response);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+
+      toast.promise(promise, {
+        pending: "Validando informações...",
+        success: "Filme alugado com sucesso!",
+        error: "Erro ao alugar filme(s)!",
+      });
     });
 
-    const promise = new Promise((resolve, reject) => {
-      axios
-        .post(`${BACKEND_URL}/cliente/alugar`, {
-          idFilmes: arrayOfMovieIds,
-          idCliente: data.user.id,
-        })
-        .then((response) => {
-          resolve(response);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
+    dispatch(updateCartItems([]));
+  };
 
-    toast.promise(promise, {
-      pending: "Validando informações...",
-      success: "Filme(s) alugado(s) com sucesso!",
-      error: "Erro ao alugar filme(s)!",
-    });
+  const executeGetAll = () => {
+    executeGetLocacoes();
+    executeGetUsers();
+    executeGetMovies();
   };
 
   return {
@@ -139,5 +224,9 @@ export default function API_Controller() {
     executeRentCartMovie,
     executeCreateMovie,
     executeGetMovies,
+    executeGetUsers,
+    executeGetLocacoes,
+    executeGetAll,
+    executeDeleteUser,
   };
 }

@@ -30,15 +30,14 @@ import {
 } from "@chakra-ui/react";
 import {
   FiHome,
-  FiTrendingUp,
-  FiCompass,
-  FiStar,
-  FiSettings,
   FiMenu,
   FiBell,
   FiChevronDown,
   FiShoppingBag,
 } from "react-icons/fi";
+import { GoLock } from "react-icons/go";
+import { MdOutlineSlowMotionVideo } from "react-icons/md";
+
 import MovieGrid from "./movieGrid";
 import { useSelector } from "react-redux";
 import CartCard from "../components/cartCard";
@@ -48,10 +47,12 @@ import userState from "../store/slices/userState";
 
 const LinkItems = [
   { name: "Home", icon: FiHome, link: "/catalogue" },
-  { name: "Em alta", icon: FiTrendingUp, link: "/catalogue/high-rented" },
-  { name: "Descubrir", icon: FiCompass, link: "/catalogue/brand-new" },
-  { name: "Favoritos", icon: FiStar },
-  { name: "Configurações", icon: FiSettings },
+  {
+    name: "Adicionar filmes",
+    icon: MdOutlineSlowMotionVideo,
+    link: "/movies/new",
+  },
+  { name: "Administração", icon: GoLock, link: "/admin" },
 ];
 
 export default function Catalogue({ children }) {
@@ -268,11 +269,9 @@ const MobileNav = ({ onOpen, ...rest }) => {
               borderColor={useColorModeValue("gray.200", "gray.700")}
               color={useColorModeValue("gray.700", "gray.200")}
             >
-              <MenuItem>Perfil</MenuItem>
-              <MenuItem>Configurações</MenuItem>
-              <MenuItem>Aluguéis</MenuItem>
-              <MenuDivider />
-              <MenuItem>Sair</MenuItem>
+              <MenuItem onClick={() => (window.location.href = "/")}>
+                Sair
+              </MenuItem>
             </MenuList>
           </Menu>
         </Flex>
@@ -285,7 +284,8 @@ function MovieDrawer(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isOpenDrawer, setDrawerIsOpen, children } = props;
   const allFilmes = useSelector((state) => state.cartState.data);
-  const { executeRentCartMovie } = GlobalHandlers();
+  const { executeRentCartMovie } = API_Controller();
+
   return (
     <Drawer
       isOpen={isOpenDrawer}
@@ -319,7 +319,7 @@ function MovieDrawer(props) {
               variant="outline"
               borderColor="#F4AC45"
               color={"#F4AC45"}
-              onClick={executeRentCartMovie}
+              onClick={() => executeRentCartMovie(allFilmes)}
             >
               Alugar
             </Button>

@@ -10,6 +10,7 @@ export const userInitialState = {
     senha: "",
     cpf: "",
     dataNascimento: "",
+    items: [],
   },
   messages: {},
 };
@@ -29,6 +30,13 @@ export const moviesInitialState = {
     Sinopse: "",
     ClassificacaoIndicativa: 0,
     Lancamento: 0,
+    items: [],
+  },
+  messages: {},
+};
+
+export const locacoesInitialState = {
+  data: {
     items: [],
   },
   messages: {},

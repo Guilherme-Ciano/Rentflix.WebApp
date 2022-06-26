@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import cartState from "./slices/cartState";
+import locacoesState from "./slices/locacoesState";
 import mainState from "./slices/mainState";
 import movieState from "./slices/moviesState";
 import userState from "./slices/userState";
@@ -10,5 +11,6 @@ export const globalStore = configureStore({
     userState: userState,
     cartState: cartState,
     movieState: movieState,
+    locacoesState: locacoesState,
   },
 });

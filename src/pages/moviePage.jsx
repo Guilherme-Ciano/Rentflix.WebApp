@@ -21,6 +21,7 @@ import { useSelector } from "react-redux";
 
 import "../styles/moviepage.scss";
 import API_Controller from "../services/api";
+import GoBackButton from "../components/goBackBnt";
 
 export default function MoviePage() {
   const movieState = useSelector((state) => state.movieState.data);
@@ -44,6 +45,7 @@ export default function MoviePage() {
           p={8}
           color={"white"}
         >
+          <GoBackButton />
           <Stack spacing={4}>
             <HStack>
               <FormControl id="name" isRequired>
