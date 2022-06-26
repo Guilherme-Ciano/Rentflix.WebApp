@@ -54,11 +54,21 @@ export default function Signin() {
             <Stack spacing={4}>
               <FormControl id="email">
                 <FormLabel>Email</FormLabel>
-                <Input type="email" name="email" onBlur={handleUpdateUser} />
+                <Input
+                  type="email"
+                  name="email"
+                  onChange={handleUpdateUser}
+                  value={userState.email}
+                />
               </FormControl>
               <FormControl id="password">
                 <FormLabel>Senha</FormLabel>
-                <Input type="password" name="senha" onBlur={handleUpdateUser} />
+                <Input
+                  type="password"
+                  name="senha"
+                  onChange={handleUpdateUser}
+                  value={userState.senha}
+                />
               </FormControl>
               <Stack spacing={10}>
                 <Stack
@@ -80,7 +90,7 @@ export default function Signin() {
                   _hover={{
                     bg: "#F4AC40",
                   }}
-                  onClick={executeSignIn(userState)}
+                  onClick={() => executeSignIn(userState)}
                 >
                   Entrar
                 </Button>

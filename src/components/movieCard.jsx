@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/movieGrid.scss";
-import { Button } from "@chakra-ui/react";
+import { Button, Tooltip } from "@chakra-ui/react";
 import { useDispatch } from "react-redux";
 import { updateCartItems } from "../store/slices/cartState";
 import { useSelector } from "react-redux";
@@ -16,14 +16,18 @@ export default function MovieCard(props) {
 
   return (
     <div className="movieCard">
-      <img src={movie.moviePoster} className="moviePoster" />
+      <img src={movie.poster} className="moviePoster" />
       <div className="movieInfo">
-        {movie.isLancamento && <div className="movieBadget"></div>}
+        {movie.lancamento === 1 ? <div className="movieBadget"></div> : ""}
         <div className="movieHeader">
-          <div className="movieTitle">{movie.movieTitle}</div>
-          <div className="movieGenre">{movie.movieGenre}</div>
+          <div className="movieTitle">{movie.titulo}</div>
+          <div className="movieGenre">{movie.genero}</div>
         </div>
-        <div className="movieDescription">{movie.movieDescription}</div>
+        <Tooltip label={movie.sinopse} placement="right" borderRadius={"8px"}>
+          <div className="movieDescription">
+            {movie.sinopse.substring(0, 200) + "..."}
+          </div>
+        </Tooltip>
 
         <Button
           fontFamily={"heading"}

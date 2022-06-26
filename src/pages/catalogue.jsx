@@ -43,6 +43,8 @@ import MovieGrid from "./movieGrid";
 import { useSelector } from "react-redux";
 import CartCard from "../components/cartCard";
 import GlobalHandlers from "../services/handlers";
+import API_Controller from "../services/api";
+import userState from "../store/slices/userState";
 
 const LinkItems = [
   { name: "Home", icon: FiHome, link: "/catalogue" },
@@ -55,6 +57,11 @@ const LinkItems = [
 export default function Catalogue({ children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const allFilmes = useSelector((state) => state.cartState.data);
+  const { executeGetMovies } = API_Controller();
+
+  useEffect(() => {
+    executeGetMovies();
+  }, []);
 
   return (
     <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
@@ -157,6 +164,8 @@ const NavItem = ({ icon, children, ...rest }) => {
 const MobileNav = ({ onOpen, ...rest }) => {
   const [drawerIsOpen, setDrawerIsOpen] = React.useState(false);
   const allFilmes = useSelector((state) => state.cartState.data);
+  const userState = JSON.parse(localStorage.getItem("user"));
+
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -244,7 +253,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
                   spacing="1px"
                   ml="2"
                 >
-                  <Text fontSize="sm">Guilherme Ciano</Text>
+                  <Text fontSize="sm">{userState.nome}</Text>
                   <Text fontSize="xs" color="whitw">
                     Usuário
                   </Text>

@@ -16,11 +16,19 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
+import GlobalHandlers from "../services/handlers";
+import { useSelector } from "react-redux";
 
 import "../styles/moviepage.scss";
+import API_Controller from "../services/api";
 
 export default function MoviePage() {
+  const movieState = useSelector((state) => state.movieState.data);
+  const movieStateMessages = useSelector((state) => state.movieState.messages);
+
   const [imagePath, setImagePath] = React.useState("");
+  const { handleUpdateMovie } = GlobalHandlers();
+  const { executeCreateMovie } = API_Controller();
 
   return (
     <section className="moviePageWrapper">
@@ -42,9 +50,9 @@ export default function MoviePage() {
                 <FormLabel>Nome do Filme</FormLabel>
                 <Input
                   type="text"
-                  name="nome"
-                  onChange={() => {}}
-                  value={""}
+                  name="Titulo"
+                  onChange={handleUpdateMovie}
+                  value={movieState.Titulo}
                   isInvalid={false}
                   placeholder={"Nome do Filme"}
                 />
@@ -54,6 +62,9 @@ export default function MoviePage() {
                 <Select
                   placeholder="Selecione um Gênero"
                   backgroundColor={"gray.900"}
+                  name="Genero"
+                  onChange={handleUpdateMovie}
+                  value={movieState.Genero}
                 >
                   <option value="Terror">Terror</option>
                   <option value="Ação">Ação</option>
@@ -71,34 +82,56 @@ export default function MoviePage() {
               <FormLabel>Poster</FormLabel>
               <Input
                 type="text"
-                name="nome"
+                name="Poster"
                 onChange={(e) => {
                   setImagePath(e.target.value);
+                  handleUpdateMovie(e);
                 }}
-                value={""}
+                value={movieState.Poster}
                 isInvalid={false}
                 placeholder={"http://www.example.com/image.jpg"}
               />
             </FormControl>
             <FormControl id="sinopse" isRequired>
               <FormLabel>Sinopse</FormLabel>
-              <Textarea placeholder="Lorem ipsum dolor color sit amet" />
+              <Textarea
+                name="Sinopse"
+                placeholder="Lorem ipsum dolor color sit amet"
+                onChange={handleUpdateMovie}
+                value={movieState.Sinopse}
+              />
             </FormControl>
             <FormControl id="classificação" isRequired>
               <FormLabel>Classificação Indicativa</FormLabel>
               <InputGroup>
                 <InputLeftAddon backgroundColor={"gray.900"} children="+" />
-                <Input type="number" placeholder="18" />
+                <Input
+                  type="number"
+                  placeholder="18"
+                  name="ClassificacaoIndicativa"
+                  onChange={handleUpdateMovie}
+                  value={movieState.ClassificacaoIndicativa}
+                />
               </InputGroup>
             </FormControl>
             <FormControl id="lancamento" isRequired>
               <FormLabel>É um lançamento?</FormLabel>
-              <RadioGroup defaultValue="2">
+              <RadioGroup defaultValue="2" value={movieState.Lancamento}>
                 <Stack spacing={5} direction="row">
-                  <Radio colorScheme="orange" value="1">
+                  <Radio
+                    colorScheme="orange"
+                    value="1"
+                    onChange={handleUpdateMovie}
+                    name="Lancamento"
+                  >
                     Sim
                   </Radio>
-                  <Radio colorScheme="orange" value="0">
+                  <Radio
+                    colorScheme="orange"
+                    value="0"
+                    name="Lancamento"
+                    onChange={handleUpdateMovie}
+                  >
                     Não
                   </Radio>
                 </Stack>
@@ -113,7 +146,7 @@ export default function MoviePage() {
                 _hover={{
                   bg: "#F4AC40",
                 }}
-                onClick={() => {}}
+                onClick={() => executeCreateMovie(movieState)}
               >
                 Cadastrar Filme
               </Button>

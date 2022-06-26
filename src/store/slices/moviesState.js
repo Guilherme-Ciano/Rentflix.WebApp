@@ -5,6 +5,9 @@ export const movieState = createSlice({
   name: "movieState",
   initialState: moviesInitialState,
   reducers: {
+    updateMovieStore: (state, action) => {
+      state.data = { ...state.data, ...action.payload };
+    },
     updateMovieItems: (state, action) => {
       state.data.items = action.payload;
     },
@@ -21,6 +24,10 @@ export const movieState = createSlice({
   },
 });
 
-export const { clearMovieItems, removeMovieItem, updateMovieItems } =
-  movieState.actions;
+export const {
+  clearMovieItems,
+  removeMovieItem,
+  updateMovieItems,
+  updateMovieStore,
+} = movieState.actions;
 export default movieState.reducer;

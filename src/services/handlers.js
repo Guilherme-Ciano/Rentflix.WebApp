@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux/es/exports";
 import { updateCartItems } from "../store/slices/cartState";
+import { updateMovieStore } from "../store/slices/moviesState";
 import {
   clearUserMessages,
   updateUserStore,
@@ -16,6 +17,14 @@ export default function GlobalHandlers() {
   const handleUpdateUser = (e) => {
     dispatch(
       updateUserStore({
+        [e.target.name]: e.target.value,
+      })
+    );
+  };
+
+  const handleUpdateMovie = (e) => {
+    dispatch(
+      updateMovieStore({
         [e.target.name]: e.target.value,
       })
     );
@@ -66,5 +75,6 @@ export default function GlobalHandlers() {
     handleMaskDate,
     handleSubmitValidation,
     addMovieToCart,
+    handleUpdateMovie,
   };
 }

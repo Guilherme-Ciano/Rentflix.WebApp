@@ -24,6 +24,11 @@ export const cartInitialState = {
 
 export const moviesInitialState = {
   data: {
+    Titulo: "",
+    Genero: "",
+    Sinopse: "",
+    ClassificacaoIndicativa: 0,
+    Lancamento: 0,
     items: [],
   },
   messages: {},

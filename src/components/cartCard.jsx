@@ -8,6 +8,7 @@ import {
   Link,
   Stack,
   Text,
+  Tooltip,
   useColorModeValue,
 } from "@chakra-ui/react";
 
@@ -47,16 +48,19 @@ export default function CartCard(props) {
           pt={2}
         >
           <Heading fontSize={"2xl"} fontFamily={"body"}>
-            {movie.movieTitle}
+            {movie.titulo}
           </Heading>
-          <Text
-            textAlign={"left"}
-            color={useColorModeValue("gray.700", "gray.400")}
-            px={3}
-            fontSize={"sm"}
-          >
-            {movie.movieDescription}
-          </Text>
+          <Tooltip label={movie.sinopse} placement="left" borderRadius={"8px"}>
+            <Text
+              textAlign={"left"}
+              color={useColorModeValue("gray.700", "gray.400")}
+              px={3}
+              fontSize={"sm"}
+            >
+              {movie.sinopse.substring(0, 200) + "..."}
+            </Text>
+          </Tooltip>
+
           <Stack align={"left"} justify={"left"} direction={"row"} mt={6}>
             <Badge
               px={2}
@@ -64,7 +68,7 @@ export default function CartCard(props) {
               bg={useColorModeValue("gray.50", "gray.800")}
               fontWeight={"400"}
             >
-              {movie.movieGenre}
+              {movie.genero}
             </Badge>
           </Stack>
 
